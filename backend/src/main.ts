@@ -1,10 +1,11 @@
-import express, { Express } from 'express'
+import express, { Express, Request, Response } from 'express'
 import swaggerUi from 'swagger-ui-express'
 
 import logger from './common/logger/logger'
 import { getConfiguration } from './config/configuration'
 import dataSource from './config/data-source'
 import documentation from './documentation'
+import { handle } from './middlewares/errors'
 import internalServerExceptionMiddleware from './middlewares/internal-server-exception.middleware'
 import routes from './routes'
 
@@ -20,7 +21,14 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(documentation))
 app.use(internalServerExceptionMiddleware)
 
 // Routes
-app.use(routes)
+app.use('/v1', routes)
+
+// Redirect to swagger docs
+app.get('/', (_: Request, res: Response) => {
+  res.redirect('/api/docs')
+})
+
+app.use(handle)
 
 const configuration = getConfiguration()
 const port = configuration.port

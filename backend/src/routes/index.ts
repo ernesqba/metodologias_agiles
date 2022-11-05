@@ -1,14 +1,13 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 
-import healthCheck from '../controllers/healthCheck'
-import authRoutes from './auth.routes'
+import autRoutes from '../modules/auth/routes/auth.routes'
 
 const router = express.Router()
 
 // Routes
-router.use('/auth', authRoutes)
+router.use('/auth', autRoutes)
 
 // Health check
-router.get('/health', healthCheck)
+router.get('/health', (_: Request, res: Response): Response => res.status(200).json({ uptime: process.uptime() }))
 
 export default router

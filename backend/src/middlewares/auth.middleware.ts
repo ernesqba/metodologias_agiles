@@ -10,10 +10,8 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction): 
     logger.debug(user)
     ;(req as any).user = user
     next()
-  } catch (err) {
-    logger.error(err)
-    const error = new Error(err.message)
-    error['status'] = 401
+  } catch (error) {
+    logger.error(error.message)
     next(error)
   }
 }
