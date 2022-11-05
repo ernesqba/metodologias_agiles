@@ -35,5 +35,3 @@ app.listen(port, async () => {
     logger.error(err.message)
   }
 })
-
-export = app
