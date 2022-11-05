@@ -5,6 +5,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "build": "tsc -p .",
+    "build:start": "tsc -p . && node scr/main.js",
     "start": "node dist/src/main.js",
     "start:dev": "nodemon src/main.ts tsoa spec",
     "prepare": "husky install",
